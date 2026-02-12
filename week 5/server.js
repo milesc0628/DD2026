@@ -42,6 +42,22 @@ app.get("/about", (req, res) => {
 // res.sendFile(filePath);
 // });
 
+app.get("/api/items", (req, res) => {
+    res.send("this is a get response from /api/items");
+});
+
+app.post("/api/items", (req, res) => {
+    res.send("this is a post response from /api/items");
+});
+
+app.put("/api/items/:id", (req, res) => {
+    res.send("this is a put response from /api/items");
+});
+
+app.delete("/api/items/:id", (req, res) => {
+    res.send("this is a delete response from /api/items");
+});
+
 app.listen(port, () => {
     console.log(`Example app listening att http://localhost:${port}`);
 });
