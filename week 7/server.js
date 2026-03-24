@@ -101,16 +101,18 @@ app.use(express.urlencoded({ extended: true }));
 // data
 
 // generate routes
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
   // Homepage route
   // Find the home page in the database and render it with the title "Welcome to Travel Site"
-  const homePage = Page.findOne({ slug: "home" }).lean();
+  const homePage = await Page.findOne({ slug: "home" }).lean();
   //Bring in the gallery
-  const gallery = Gallery.findOne({ name: "home" }).populate("images").lean();
+  const gallery = await Gallery.findOne({ name: "home" }).populate("images").lean();
+  const destinations = await Destination.find().lean();
   res.render("home", {
     title: homePage.name,
     description: homePage.description,
     galleryImages: gallery.images,
+    destinations: destinations,
   });
 });
 
