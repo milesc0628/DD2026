@@ -14,10 +14,14 @@
     <!-- Important React concepts: Components, Props, State -->
     <div id="app"></div>
     <script type="text/jsx">
+      const fruits =["Apple", "Banana", "Pear", "Pineapple"];
       const app = document.getElementById("app");
       // React Components
       function Header({ title }) {
         return <h1> {createTitle(title)} </h1>;
+      }
+      function Paragraph(props){
+        return <p>(props.text)</p>;
       }
       function createTitle(title) {
         if (title) {
@@ -27,11 +31,25 @@
         }
       }
       function Homepage() {
+        //react State
+        const [Likes, setLikes] = React.useState(0);
+        let likes = 0;
+        function handleClick(){
+          likes += 1;
+        console.log("You've clicked the button!");
+        } 
         return (
           <>
             <Header title="Welcome to the homepage" />
             <Header />
-            <p>This is the homepage</p>
+            <Paragraph text="This is the homepage. Plus some other text."/>
+            <ul>
+              {fruits.map((fruit, index) => (
+                <li>{fruit}</li>
+              ))}
+            </ul>
+            <button onClick=(handleClick)> {{likes}} Likes</button>
+            </button>
           </>
         );
       }
