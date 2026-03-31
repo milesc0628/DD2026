@@ -1,0 +1,30 @@
+[{
+  "_id": {
+    "$oid": "69a07f2091916885e7ef3666"
+  },
+  "page": "Miami",
+  "name": "Miami",
+  "description": "Miami is a coastal city in the U.S. state of Florida. It is the second-most populous city proper in Florida, with a population of 442,241 at the 2020 census. The Miami metropolitan area in South Florida has an estimated 6.46 million residents, ranking as the third-largest metropolitan area in the Southeast and sixth-largest metropolitan area in the United States. Miami has the third-largest skyline in the U.S. with over 300 high-rises, 70 of which exceed 491 ft (150 m). It is the county seat of Miami-Dade County.",
+  "image": "/images/miami.jpg",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69a710b9789a533045d7c1f4"
+  },
+  "page": "New York City",
+  "name": "New York City",
+  "description": "New York, often called New York City (NYC), is the most populous city in the United States. It is located at the southern tip of New York State on New York Harbor, one of the world's largest natural harbors. The city comprises five boroughs, each coextensive with its respective county. It is the geographical and demographic center of both the Northeast megalopolis and the New York metropolitan area, the largest metropolitan area in the United States by both population and urban area. New York is a global center of finance and commerce, culture, technology, entertainment and media, academics and scientific output, the arts and fashion, and, as home to the headquarters of the United Nations, international diplomacy.",
+  "image": "/images/newyork.jpg",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69cbf2e045b0cd7ec1c85b74"
+  },
+  "page": "Chicago",
+  "name": "Chicago",
+  "description": "Chicago is the most populous city in the U.S. state of Illinois and in the Midwestern United States. Located on the western shore of Lake Michigan, it is the third-most populous city in the United States, with a population of 2.74 million at the 2020 census. The Chicago metropolitan area has 9.41 million residents and is the third-largest metropolitan area in the country. Chicago is the seat of Cook County, the second-most populous county in the U.S.",
+  "image": "/images/chicago.jpg",
+  "__v": 0
+}]

@@ -1,0 +1,117 @@
+[{
+  "_id": {
+    "$oid": "69a9b75c191a0121368f6a10"
+  },
+  "name": "ATV Tour",
+  "description": "4 hour tour around Miami",
+  "image": "/images/ATV.jpg",
+  "cost": 69.99,
+  "destination": {
+    "$oid": "69a07f2091916885e7ef3666"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69a9b8ab191a0121368f6a17"
+  },
+  "name": "Zoo",
+  "description": "Zoo miami",
+  "image": "/images/zoo.jpg",
+  "cost": 9.99,
+  "destination": {
+    "$oid": "69a07f2091916885e7ef3666"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69a9b8dc191a0121368f6a19"
+  },
+  "name": "Sunset Cruise",
+  "description": "Cruse along Bayside for the Miami skyline.",
+  "image": "/images/sunsetcruise.jpg",
+  "cost": 200,
+  "destination": {
+    "$oid": "69a07f2091916885e7ef3666"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69cbf0da45b0cd7ec1c85b5d"
+  },
+  "name": "Central Park",
+  "description": "Visit Central Park and enjoy the beautiful scenery.",
+  "image": "/images/centralpark.jpg",
+  "cost": 0,
+  "destination": {
+    "$oid": "69a710b9789a533045d7c1f4"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69cbf19045b0cd7ec1c85b67"
+  },
+  "name": "Metropolitan Museum of Art",
+  "description": "Walk through the Metropolitan Museum of Art and experience a wide gallery of artworks.",
+  "image": "/images/metromuseum.jpeg",
+  "cost": 30,
+  "destination": {
+    "$oid": "69a710b9789a533045d7c1f4"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69cbf26145b0cd7ec1c85b6f"
+  },
+  "name": "Rockefeller Center",
+  "description": "Experience ice skating and NYC's famous Christmas Tree during the holiday season.",
+  "image": "/images/rockefeller.jpg",
+  "cost": 34.84,
+  "destination": {
+    "$oid": "69a710b9789a533045d7c1f4"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69cbf51945b0cd7ec1c85b8b"
+  },
+  "name": "The Art Institute of Chicago",
+  "description": "Admire the beautiful artwork hosted at the Art Institute of Chicago.",
+  "image": "/images/chicagoai.jpg",
+  "cost": 89.04,
+  "destination": {
+    "$oid": "69cbf2e045b0cd7ec1c85b74"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69cc3938c14d5a470b7f6140"
+  },
+  "name": "Millennium Park",
+  "description": "Check out Chicago's state-of-the-art collection of architecture and landscape design, along with free cultural programs hosted there.",
+  "image": "/images/millenium.jpg",
+  "cost": 0,
+  "destination": {
+    "$oid": "69cbf2e045b0cd7ec1c85b74"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69cc3991c14d5a470b7f6142"
+  },
+  "name": "Griffin Museum of Science and Industry",
+  "description": "One of the Western Hemisphere's largest science centers, showcasing scientific and industrial discoveries.",
+  "image": "/images/griffin.jpg",
+  "cost": 25.95,
+  "destination": {
+    "$oid": "69cbf2e045b0cd7ec1c85b74"
+  },
+  "__v": 0
+}]
