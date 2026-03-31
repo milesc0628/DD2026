@@ -16,6 +16,7 @@
     <script type="text/jsx">
       const fruits =["Apple", "Banana", "Pear", "Pineapple"];
       const app = document.getElementById("app");
+      const [Likes, setLikes] = React.useState(0);
       // React Components
       function Header({ title }) {
         return <h1> {createTitle(title)} </h1>;
@@ -32,10 +33,10 @@
       }
       function Homepage() {
         //react State
-        const [Likes, setLikes] = React.useState(0);
         let likes = 0;
         function handleClick(){
-          likes += 1;
+          //likes += 1;
+          setLikes(likes + 1);
         console.log("You've clicked the button!");
         } 
         return (
@@ -48,12 +49,21 @@
                 <li>{fruit}</li>
               ))}
             </ul>
+            //https:cdn.miami.edu/
+
+            <label htmlFor="name">Name:</label>
+            <input
+            type="text"
+            id="name"
+            name="name"
+            onChange={(e) => setName(e.target.value)}
+            />
+            <Paragraph text={`You entered: ${name}!`}
             <button onClick=(handleClick)> {{likes}} Likes</button>
             </button>
           </>
         );
       }
-
       const root = ReactDOM.createRoot(app);
       root.render(<Homepage />);
     </script>
