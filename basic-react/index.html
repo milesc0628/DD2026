@@ -13,16 +13,16 @@
   <body>
     <!-- Important React concepts: Components, Props, State -->
     <div id="app"></div>
-    <script type="text/jsx">
-      const fruits =["Apple", "Banana", "Pear", "Pineapple"];
+    <script type="text/babel">
+      const fruits = ["Apple", "Banana", "Cherry", "Mango", "Pineapple"];
+
       const app = document.getElementById("app");
-      const [Likes, setLikes] = React.useState(0);
       // React Components
       function Header({ title }) {
         return <h1> {createTitle(title)} </h1>;
       }
-      function Paragraph(props){
-        return <p>(props.text)</p>;
+      function Paragraph(props) {
+        return <p>{props.text}</p>;
       }
       function createTitle(title) {
         if (title) {
@@ -31,39 +31,98 @@
           return "Default title";
         }
       }
+
+      function Results({ result }) {
+        return (
+          <div>
+            <h2>Search Results:</h2>
+            <ul>
+              {result.map((res, index) => (
+                <li key={res.alpha}>
+                  {res.alpha} <br />
+                  {res.context} <br />
+                  <a href={res.url} target="_blank">
+                    View
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      }
+
       function Homepage() {
-        //react State
-        let likes = 0;
-        function handleClick(){
-          //likes += 1;
+        //react state
+        const [likes, setLikes] = React.useState(0);
+        const [name, setName] = React.useState("John Doe");
+
+        // Search application
+        const [searchTerm, setSearchTerm] = React.useState("");
+
+        // track results
+        const [searchResults, setSearchResults] = React.useState([]);
+
+        function handleClick() {
           setLikes(likes + 1);
-        console.log("You've clicked the button!");
-        } 
+          //likes = likes + 1;
+          //likes += 1;
+          //likes++;
+          console.log("You clicked the button!");
+          console.log("Likes: ", likes);
+        }
+        function performSearch() {
+          const searchUrl = `https://www.cdn.miami.edu/_assets-common/php/searchblox/?q=${searchTerm}`;
+          fetch(searchUrl)
+            .then((response) => response.json())
+            .then((data) => {
+              console.log("Search results: ", data);
+              setSearchResults(data.result);
+              // You can also update the state with the search results here
+            })
+            .catch((error) => {
+              console.error("Error performing search: ", error);
+            });
+        }
+
         return (
           <>
             <Header title="Welcome to the homepage" />
             <Header />
-            <Paragraph text="This is the homepage. Plus some other text."/>
+            <Paragraph
+              text="This is the homepage. Plus some other text."
+              color="red"
+            />
             <ul>
               {fruits.map((fruit, index) => (
-                <li>{fruit}</li>
+                <li key={index}>{fruit}</li>
               ))}
             </ul>
-            //https:cdn.miami.edu/
-
-            <label htmlFor="name">Name:</label>
+            // https://www.cdn.miami.edu/_assets-common/php/searchblox/?
+            <label htmlFor="name">Name: </label>
             <input
-            type="text"
-            id="name"
-            name="name"
-            onChange={(e) => setName(e.target.value)}
+              type="text"
+              id="name"
+              name="name"
+              onChange={(e) => setName(e.target.value)}
             />
-            <Paragraph text={`You entered: ${name}!`}
-            <button onClick=(handleClick)> {{likes}} Likes</button>
-            </button>
+            <Paragraph text={`You entered: ${name}!`} />
+            <button onClick={handleClick}> ({likes}) Likes</button>
+            <br />
+            <label htmlFor="search">Search: </label>
+            <input
+              type="text"
+              id="search"
+              name="search"
+              placeholder="Search miami.edu..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <button onClick={performSearch}>Search</button>
+            <Results result={searchResults} />
           </>
         );
       }
+
       const root = ReactDOM.createRoot(app);
       root.render(<Homepage />);
     </script>
