@@ -4,6 +4,7 @@
 // 4. start the db with command: brew services start mongodb-community //mac on windows start the mongodb server with command: & "C:\Program Files\MongoDB\Server\8.2\bin\mongod.exe" --dbpath="C:\data\db"
 const express = require("express");
 const app = express();
+// change port to 3001 to avoid conflict with React development server which runs on port 3000 by default
 const port = 3001;
 
 // https://www.npmjs.com/package/express-handlebars is a Handlebars view engine for Express which provides a way to render dynamic HTML pages using Handlebars templates. It allows you to separate your HTML structure from your application logic, making it easier to manage and maintain your views. With express-handlebars, you can create reusable templates, partials, and layouts, which can help you build more complex and dynamic web applications efficiently.
@@ -14,24 +15,22 @@ app.set("view engine", "handlebars");
 //app.set("views", path.join(__dirname, "views"));
 // the path module is used to work with file and directory paths
 const path = require("path");
-
-const multer  = require('multer');
+// setup uploads directory for storing uploaded images
+const multer = require("multer");
 
 const storage = multer.diskStorage({
-destination: function (req, file, cb){
-  cb(null, './static/images/')
-},
-filename: function (req, file, cb){
-  cb(null, Date.now() + "-" + file.originalname)
-}
+  destination: function (req, file, cb) {
+    cb(null, "./static/images/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
 });
-
 const upload = multer(storage);
 
 //setup db connection
 const mongoose = require("mongoose");
 const { title } = require("process");
-const req = require("express/lib/request");
 // create schemas
 const pageSchema = new mongoose.Schema({
   slug: String, //about-us friendly url
@@ -113,24 +112,27 @@ app.use(express.static(path.join(__dirname, "static")));
 // Parse the body of incoming requests with urlencoded payloads and is based on body-parser. This middleware is used to parse the body of incoming requests and make it available under the req.body property. The extended: true option allows for rich objects and arrays to be encoded into the URL-encoded format, which can be useful for complex data structures.
 app.use(express.urlencoded({ extended: true }));
 // data
-app.use(express.json());
-// Set up basic CORS headers
-app.use((req, res, next) =>{
-  res.header("Access-Control-Allow-Origin", "*");
+// Set up Basic CORS headers for communicating with APIs and accept POST, PUT, DELETE, GET requests from any origin. This middleware is used to set the CORS headers for the responses. The Access-Control-Allow-Origin header allows requests from any origin, and the Access-Control-Allow-Headers header specifies which headers are allowed in the requests.
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*"); // Allow requests from any origin. This should not be used in production without proper security measures in place.
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
+    "Origin, X-Requested-With, Content-Type, Accept",
   );
   next();
 });
+
 // generate routes
 app.get("/", async (req, res) => {
   // Homepage route
   // Find the home page in the database and render it with the title "Welcome to Travel Site"
   const homePage = await Page.findOne({ slug: "home" }).lean();
   //Bring in the gallery
-  const gallery = await Gallery.findOne({ name: "home" }).populate("images").lean();
+  const gallery = await Gallery.findOne({ name: "home" })
+    .populate("images")
+    .lean();
+
   const destinations = await Destination.find().lean();
   res.render("home", {
     title: homePage.name,
@@ -141,19 +143,18 @@ app.get("/", async (req, res) => {
 });
 
 // generate routes to populate destinations page
-app.post("/api/destinations", upload.single('image'), async (req, res) => {
+app.post("/api/destinations", upload.single("image"), async (req, res) => {
   // code to add a new destination to the database
   const { page, name, description } = req.body;
-  const image = req.file;
+  const image = req.file; // Get the path of the uploaded image
   console.log(req.body);
   const newDestination = new Destination({
     page,
     name,
     description,
-    image: image.filename ? `/images/$(image.filename)` : "/images/default.jpg",
+    image: image.filename ? `/images/${image.filename}` : "/images/default.jpg", // Store the path to the image in the database
   });
   await newDestination.save();
-  console.log("destination added");
   //res.redirect("/destinations");
   res.send("Destination added successfully");
 });
@@ -174,7 +175,6 @@ app.get("/destinations/:id", async (req, res) => {
     .populate("activities")
     .lean();
   //const activities = await Activity.find({ destination: id }).lean();
-
   res.render("details", {
     destination: destination,
     title: destination.name,
@@ -228,10 +228,20 @@ app.post("/images", async (req, res) => {
   await newImage.save();
   res.send("Image added successfully");
 });
-app.get("/api/destinations", async (req,res) =>{
+// setup basic api routes
+app.get("/api/destinations", async (req, res) => {
   const destinations = await Destination.find().lean();
   res.json(destinations);
-})
+});
+// Get a specific destination by _id
+app.get("/api/destinations/:id", async (req, res) => {
+  const { id } = req.params;
+  const destination = await Destination.findById(id)
+    .populate("activities")
+    .lean();
+  //const activities = await Activity.find({ destination: id }).lean();
+  res.json(destination);
+});
 
 // start the server
 app.listen(port, () => {
