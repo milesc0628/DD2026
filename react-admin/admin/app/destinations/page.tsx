@@ -24,6 +24,24 @@ export default function DestinationsPage() {
     fetchDestinations();
   }, []);
 
+const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    const id = e.currentTarget.getAttribute("data-id");
+    if (!id) return;
+
+    try {
+      const response = await fetch(`http://localhost:3001/api/destinations/${id}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        throw new Error("Failed to delete destination");
+      } else {
+        // Remove the deleted destination from the state
+        setDestinations(destinations.filter(dest => dest._id !== id));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div>
@@ -39,7 +57,9 @@ export default function DestinationsPage() {
   <tbody>
     { destinations.map((destination) => (
       <tr key={destination._id}>
-        <td className="border border-gray-600 p-2">{destination.image}</td>
+        <td className="border border-gray-600 p-2">
+        <img src={`http://localhost:3001/${destination.image}`} alt={destination.name} className="w-full h-full object-cover" />
+        </td>
         <td className="border border-gray-600 p-2">{destination.name}</td>
         <td className="border border-gray-600 p-2">{destination.description}</td>
         <td className="border border-gray-600 p-2 w-[200px]">
@@ -47,7 +67,7 @@ export default function DestinationsPage() {
           href={`/destinations/edit/?id=${destination._id}`}>
             Edit
           </a>
-          <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2">
+          <button data-id={destination._id} onClick={handleDelete} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2">
             Delete
           </button>
         </td>

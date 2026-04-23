@@ -1,10 +1,11 @@
 "use client";
 import { useState } from "react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 // form fields: name, page, description,image  
 
 export default function NewDestinationPage() {
+    const router = useRouter();
     const [formData, setFormData] = useState({
         name: "",
         page: "",
@@ -56,7 +57,7 @@ export default function NewDestinationPage() {
                 throw new Error("Failed to add destination");
             } else {
                 // everything worked.. send the user back to destinations page 
-                //redirect('/destinations');
+                router.push('/destinations');
                 
             }
         } catch (err) {

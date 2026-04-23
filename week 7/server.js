@@ -152,7 +152,7 @@ app.post("/api/destinations", upload.single("image"), async (req, res) => {
     page,
     name,
     description,
-    image: image.filename ? `/images/${image.filename}` : "/images/default.jpg", // Store the path to the image in the database
+    image: image ? `/images/${image.filename}` : "/images/default.jpg", // Store the path to the image in the database
   });
   await newDestination.save();
   //res.redirect("/destinations");
@@ -180,6 +180,28 @@ app.get("/destinations/:id", async (req, res) => {
     title: destination.name,
     activities: destination.activities,
   });
+});
+
+// update destination
+app.put("/api/destinations/:id", upload.single("image"), async (req, res) => {
+  console.clear();
+  const { id } = req.params;
+  const { page, name, description } = req.body;
+  const image = req.file;
+
+  await Destination.findByIdAndUpdate(id, {
+    page,
+    name,
+    description,
+    image: image ? `/images/${image.filename}` : this.image,
+  });
+  res.send("Destination updated successfully");
+});
+
+app.delete("/api/destinations/:id", async (req, res) => {
+  const { id } = req.params;
+  await Destination.findByIdAndDelete(id);
+  res.send("Destination deleted successfully");
 });
 
 // activities routes
